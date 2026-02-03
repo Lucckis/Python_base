@@ -1,0 +1,70 @@
+Script das tabelas de banco de dados do projeto Hydro
+
+
+-- Criando Tabelas
+
+create table T_CLIENTE(
+    id_cliente int primary key not null,
+    nm_cliente varchar2(30) not null
+);
+
+create table T_AREA_DE_RISCO(
+    id_area_risco int primary key not null,
+    id_cliente int not null,
+    ds_area_risco varchar2(255) not null,
+    loc_area_risco varchar2(150) not null,
+    
+    constraint fk_cliente foreign key(id_cliente) references T_CLIENTE
+);
+
+create table T_ALERTA(
+    id_alerta int primary key not null, 
+    id_cliente int not null,
+    id_area_risco int not null,
+    qtd_alerta number not null,
+    tp_alerta varchar2(200) not null,
+    ds_alerta varchar2(255) not null,
+    dt_hr_alerta date not null,
+   
+    constraint fk_clientev2 foreign key (id_cliente) references T_CLIENTE,
+    constraint fk_area_risco foreign key (id_area_risco) references T_AREA_DE_RISCO
+);
+
+create table T_MENSAGEM_CHATBOT(
+    id_chatbot int primary key not null,
+    id_cliente int not null,
+    pergunta_cliente varchar2(255),
+    resposta_chatbot varchar2(255),
+    dt_hr_interacao date,
+    
+    constraint fk_clientev3 foreign key (id_cliente) references T_CLIENTE
+);
+
+create table T_ROTAS_SEGURAS(
+    id_rotas_seguras int primary key not null,
+    id_cliente int not null,
+    busca_rota_seguras varchar(60) not null,
+    loc_rota_segura varchar2(80) not null,
+    ds_rota_segura varchar2(100) not null,
+    st_rota_segura varchar2(90) not null,
+     
+    constraint fk_clientev4 foreign key (id_cliente) references T_CLIENTE
+);
+
+create table T_LOCAIS_SEGUROS(
+    id_locais_seguros int primary key not null,
+    id_cliente int not null,
+    busca_locais_seguros varchar2(80) not null,
+    nm_lugar_seguro varchar2(90) not null,
+    ds_local_seguro varchar2(150) not null,
+    st_lugar_seguro varchar2(75) not null,
+    
+    constraint fk_clientev5 foreign key (id_cliente) references T_CLIENTE 
+);
+
+drop table T_LOCAIS_SEGUROS
+drop table T_ROTAS_SEGURAS
+drop table T_MENSAGEM_CHATBOT
+drop table T_ALERTA
+drop table T_AREA_DE_RISCO
+drop table T_CLIENTE
